@@ -3,5 +3,7 @@
     "python.linting.pylintArgs": [
         "--errors-only",
         "--generated-members=pygame.*, numpy.* ,torch.* ,cv2.* , cv.*"
-        ]
+        ],
+        "python.linting.pylintEnabled": true,
+        "python.linting.enabled": false
 }

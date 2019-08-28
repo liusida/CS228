@@ -1,4 +1,6 @@
-pygameWindowWidth = 100
-pygameWindowDepth = 100
+pygameWindowWidth = 900
+pygameWindowDepth = 900
 
-pygameCircleRadius = 20
+pygameCircleRadius = 16
+
+circleVelocity = 1
