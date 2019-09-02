@@ -25,19 +25,22 @@ def Perturb_Circle_Position():
     else:
         print("Warning. fourSidedDieRoll is not in [1,4].")
 
-def Handle_Frame(frame):
-    global x,y
+def Handle_Finger(finger):
+    for b in range(4):
+        bone = finger.bone(b)
+        Handle_Bone(bone)
+
+def Handle_Bone(bone):
+    global pygameWindow
+    base = bone.prev_joint
+    tip = bone.next_joint
+    pygameWindow.Draw_Black_Line(Handle_Vector_From_Leap(base), Handle_Vector_From_Leap(tip), 4-bone.type)
+
+def Handle_Vector_From_Leap(v):
     global xMin, xMax, yMin, yMax
     global stretching
-    hand = frame.hands[0]
-    fingers = hand.fingers
-    indexFingerList = fingers.finger_type(Leap.Finger.TYPE_INDEX)
-    indexFinger = indexFingerList[0]
-    distalPhalanx = indexFinger.bone(Leap.Bone.TYPE_DISTAL)
-    tip = distalPhalanx.next_joint
-    x=tip[0]
-    y=tip[1]
-    stretching = False
+    x=v.x
+    y=v.z
     if (x<xMin):
         xMin = x
         stretching = True
@@ -50,6 +53,23 @@ def Handle_Frame(frame):
     if (y>yMax):
         yMax = y
         stretching = True
+    x = Scale(x, xMin, xMax, 0, constants.pygameWindowWidth)
+    # y = Scale(y, yMin, yMax, constants.pygameWindowDepth, 0)
+    y = Scale(y, yMin, yMax, 0, constants.pygameWindowDepth)
+    return (x, y)
+
+def Handle_Frame(frame):
+    # global x,y
+    hand = frame.hands[0]
+    fingers = hand.fingers
+    for finger in fingers:
+        Handle_Finger(finger)
+    
+    # indexFingerList = fingers.finger_type(Leap.Finger.TYPE_INDEX)
+    # indexFinger = indexFingerList[0]
+    # distalPhalanx = indexFinger.bone(Leap.Bone.TYPE_DISTAL)
+    # tip = distalPhalanx.next_joint
+    pass
 
 def Scale(value, sourceMin, sourceMax, targetMin, targetMax):
     sourceWidth = sourceMax-sourceMin
@@ -66,6 +86,7 @@ pygameWindow = PYGAME_WINDOW()
 x = constants.pygameWindowWidth/2
 y = constants.pygameWindowDepth/2
 
+# xMin, xMax, yMin, yMax = (-1000,1000,-1000,1000)
 xMin, xMax, yMin, yMax = (0,0,0,0)
 
 stretching = False
@@ -73,18 +94,19 @@ stretching = False
 while(True):
     pygameWindow.Prepare()
 
+    stretching = False
+
     frame = controller.frame()
     if (len(frame.hands)>0):
         Handle_Frame(frame)
 
-    pygameX = Scale(x, xMin, xMax, 0, constants.pygameWindowWidth)
-    pygameY = Scale(y, yMin, yMax, constants.pygameWindowDepth, 0)
 
     if stretching:
-        pygameWindow.Fill((220,220,220))
-    pygameWindow.Print("xMin:"+str(xMin)+" xMax:"+str(xMax)+" x:"+str(x)+" pygameX:"+str(pygameX))
-    pygameWindow.DrawBlackCircles(pygameX, pygameY)
+        #pygameWindow.Print("Stretching...")
+        print("Stretching...")
+    # pygameWindow.Print("xMin:"+str(xMin)+" xMax:"+str(xMax)+" x:"+str(x)+" pygameX:"+str(pygameX))
+    # pygameWindow.DrawBlackCircles(pygameX, pygameY)
+    
     #Perturb_Circle_Position()
     pygameWindow.Reveal()
-#    print('Draw something.')
 
