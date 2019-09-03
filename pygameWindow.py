@@ -21,7 +21,7 @@ class PYGAME_WINDOW:
     def Reveal(self):
         pygame.display.update()
 
-    def DrawBlackCircles(self, x, y):
+    def Draw_Black_Circles(self, x, y):
         black = 0,0,0
         pygame.draw.circle(self.screen, black, (int(x),int(y)), constants.pygameCircleRadius)
 
