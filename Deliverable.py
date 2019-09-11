@@ -18,6 +18,7 @@ class DELIVERABLE:
         self.previousNumberOfHands = 0
         self.currentNumberOfHands = 0
         self.gestureData = np.zeros((5,4,6), dtype='f')
+        self.pickleFileIndex = 0
 
     def Handle_Finger(self, finger):
         for b in range(4):
@@ -80,9 +81,10 @@ class DELIVERABLE:
             self.Save_Gesture()
     
     def Save_Gesture(self):
-        pickle_out = open("userData/gesture.p","wb")
+        pickle_out = open("userData/gesture%d.p"%self.pickleFileIndex,"wb")
         pickle.dump(self.gestureData, pickle_out)
         pickle_out.close()
+        self.pickleFileIndex += 1
 
     def Scale(self, value, sourceMin, sourceMax, targetMin, targetMax):
         sourceWidth = sourceMax-sourceMin
