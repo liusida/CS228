@@ -1,4 +1,5 @@
 import numpy as np
+import pickle
 from pygameWindow_Del03 import PYGAME_WINDOW
 import constants
 import sys
@@ -76,8 +77,13 @@ class DELIVERABLE:
         for finger in fingers:
             self.Handle_Finger(finger)
         if self.Recording_is_Ending():
-            print(self.gestureData)
-        
+            self.Save_Gesture()
+    
+    def Save_Gesture(self):
+        pickle_out = open("userData/gesture.p","wb")
+        pickle.dump(self.gestureData, pickle_out)
+        pickle_out.close()
+
     def Scale(self, value, sourceMin, sourceMax, targetMin, targetMax):
         sourceWidth = sourceMax-sourceMin
         if sourceWidth==0:
