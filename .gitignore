@@ -1,2 +1,2 @@
 *.pyc
-userData/
+userData/*.p
