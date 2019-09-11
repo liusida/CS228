@@ -6,6 +6,7 @@ import sys
 sys.path.insert(0, '../LeapSDK/lib')
 sys.path.insert(0, '../LeapSDK/lib/x86')
 import Leap
+import os, shutil
 
 class DELIVERABLE:
     def __init__(self):
@@ -19,6 +20,11 @@ class DELIVERABLE:
         self.currentNumberOfHands = 0
         self.gestureData = np.zeros((5,4,6), dtype='f')
         self.pickleFileIndex = 0
+        self.Delete_All_UserData()
+
+    def Delete_All_UserData(self):    
+        shutil.rmtree(os.path.dirname(os.path.realpath(__file__))+"/userData")
+        os.mkdir(os.path.dirname(os.path.realpath(__file__))+"/userData")
 
     def Handle_Finger(self, finger):
         for b in range(4):

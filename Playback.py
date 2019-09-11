@@ -4,5 +4,4 @@ from Reader import READER
 
 
 Reader = READER()
-gestureData = Reader.Read()
-print(gestureData)
+Reader.Draw_Gestures()
