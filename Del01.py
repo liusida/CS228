@@ -83,7 +83,7 @@ while(True):
     if stretching:
         pygameWindow.Fill((220,220,220))
     pygameWindow.Print("xMin:"+str(xMin)+" xMax:"+str(xMax)+" x:"+str(x)+" pygameX:"+str(pygameX))
-    pygameWindow.DrawBlackCircles(pygameX, pygameY)
+    pygameWindow.Draw_Black_Circles(pygameX, pygameY)
     #Perturb_Circle_Position()
     pygameWindow.Reveal()
 #    print('Draw something.')
