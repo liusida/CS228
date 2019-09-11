@@ -25,9 +25,8 @@ class PYGAME_WINDOW:
         black = 0,0,0
         pygame.draw.circle(self.screen, black, (int(x),int(y)), constants.pygameCircleRadius)
 
-    def Draw_Black_Line(self, base, tip, width=2):
-        black = 0,0,0
-        pygame.draw.line(self.screen, black, base, tip, width)
+    def Draw_Line(self, base, tip, width=2, color=(0,0,0)):
+        pygame.draw.line(self.screen, color, base, tip, width)
 
     def Print(self, status):
         font = pygame.font.SysFont("consolas", 16)

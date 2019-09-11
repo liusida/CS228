@@ -1,4 +1,3 @@
-import numpy as np
 from Deliverable import DELIVERABLE
 
 d = DELIVERABLE()
