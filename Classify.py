@@ -4,6 +4,7 @@ import constants
 import os, shutil
 
 from knn import KNN
+from knn_backup import KNN as KNN_backup
 
 pickle_in = open("userData/train2.dat","rb")
 train2 = pickle.load(pickle_in)
@@ -76,17 +77,20 @@ test3 = CenterData(test3)
 trainX, trainY = ReshapeData( train2, train3 )
 testX, testY = ReshapeData( test2, test3 )
 
+def SaveDataToPickle(var, fname):
+    pickle_out = open("userData/"+fname,"wb")
+    pickle.dump(var, pickle_out)
+    pickle_out.close()
+
+SaveDataToPickle([trainX, trainY, testX, testY], "KNN_dataset")
 
 knn = KNN()
 knn.Use_K_Of(15)
 knn.Fit(trainX,trainY)
 
-great = 0
-for row in range(2000):
-    prediction = knn.Predict(testX[row,:])
-    if prediction == testY[row]:
-        great += 1
-print(great/2000.)
+predictions = knn.Predict1(testX)
+great = np.sum(np.equal(predictions,testY))
+print("accuracy:", great/2000.)
 
 # First accuracy: 90.75%
 # Second accuracy: 97.4%

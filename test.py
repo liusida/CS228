@@ -1,7 +1,8 @@
 import numpy as np
 
-X = np.arange(5*4*6).reshape(5,4,6)
-print(X)
-X = np.delete(X,[1,2],1)
+X = np.arange(5)
+X1 = np.arange(10,20).reshape(2,5)
 print(X.shape)
-print(X)
+Y = X-X1
+
+print(Y)
