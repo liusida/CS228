@@ -88,9 +88,20 @@ knn = KNN()
 knn.Use_K_Of(15)
 knn.Fit(trainX,trainY)
 
-predictions = knn.Predict1(testX)
-great = np.sum(np.equal(predictions,testY))
+import time
+start_time = time.time()
+if False: # using KNN_backup
+    great = 0
+    for row in range(0,2000):
+        prediction = knn.Predict(testX[row])
+        if prediction==testY[row]:
+            great += 1
+
+else:
+    predictions = knn.Predict(testX)
+    great = np.sum(np.equal(predictions,testY))
 print("accuracy:", great/2000.)
+print("time: ", time.time()-start_time)
 
 # First accuracy: 90.75%
 # Second accuracy: 97.4%
