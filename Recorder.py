@@ -30,7 +30,7 @@ class RECORDER:
     def Delete_All_UserData(self):
         userPath = os.path.dirname(os.path.realpath(__file__))+"/userData"
         if os.path.exists(userPath):
-            fileList = glob.glob(userPath+"/*.p")
+            fileList = glob.glob(userPath+"/gesture*.p")
             for f in fileList:
                 os.remove(f)
         else:
