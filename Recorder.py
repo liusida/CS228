@@ -6,11 +6,11 @@ import sys
 sys.path.insert(0, '../LeapSDK/lib')
 sys.path.insert(0, '../LeapSDK/lib/x86')
 import Leap
-import os, shutil
+import os, glob
 
 class RECORDER:
     def __init__(self):
-        self.numberOfGestures = 100
+        self.numberOfGestures = 1000
         self.gestureIndex = 0
 
         self.controller = Leap.Controller()
@@ -27,10 +27,15 @@ class RECORDER:
         self.pickleFileIndex = 0
         self.Delete_All_UserData()
 
-    def Delete_All_UserData(self):    
-        shutil.rmtree(os.path.dirname(os.path.realpath(__file__))+"/userData")
-        os.mkdir(os.path.dirname(os.path.realpath(__file__))+"/userData")
-
+    def Delete_All_UserData(self):
+        userPath = os.path.dirname(os.path.realpath(__file__))+"/userData"
+        if os.path.exists(userPath):
+            fileList = glob.glob(userPath+"/*.p")
+            for f in fileList:
+                os.remove(f)
+        else:
+            os.mkdir(userPath)
+        
     def Handle_Finger(self, finger):
         for b in range(4):
             bone = finger.bone(b)
@@ -88,14 +93,18 @@ class RECORDER:
         fingers = hand.fingers
         for finger in fingers:
             self.Handle_Finger(finger)
-        if self.Recording_is_Ending():
-            self.Save_Gesture()
+        if self.currentNumberOfHands==2:
+            print('gesture ' + str(self.gestureIndex) + ' stored.')
+            self.gestureIndex = self.gestureIndex + 1
+            if self.gestureIndex == self.numberOfGestures:
+                self.Save_Gesture()
+                exit(0)
     
     def Save_Gesture(self):
-        pickle_out = open("userData/gesture%d.p"%self.pickleFileIndex,"wb")
+        pickle_out = open("userData/gesture.p","wb")
         pickle.dump(self.gestureData, pickle_out)
         pickle_out.close()
-        self.pickleFileIndex += 1
+        #self.pickleFileIndex += 1
 
     def Scale(self, value, sourceMin, sourceMax, targetMin, targetMax):
         sourceWidth = sourceMax-sourceMin
