@@ -6,16 +6,16 @@ import os, shutil
 from knn import KNN
 from knn_backup import KNN as KNN_backup
 
-pickle_in = open("userData/train2.dat","rb")
+pickle_in = open("userData/train2.p","rb")
 train2 = pickle.load(pickle_in)
 pickle_in.close()
-pickle_in = open("userData/test2.dat","rb")
+pickle_in = open("userData/test2.p","rb")
 test2 = pickle.load(pickle_in)
 pickle_in.close()
-pickle_in = open("userData/train3.dat","rb")
+pickle_in = open("userData/train3.p","rb")
 train3 = pickle.load(pickle_in)
 pickle_in.close()
-pickle_in = open("userData/test3.dat","rb")
+pickle_in = open("userData/test3.p","rb")
 test3 = pickle.load(pickle_in)
 pickle_in.close()
 

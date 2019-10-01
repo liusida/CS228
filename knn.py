@@ -27,6 +27,7 @@ class KNN:
 
     # The Faster Predict Function
     #   modified by Sida Liu (sliu1), 2019/09/24
+    # testFeatures can be in shape (2000, 30) or shape (30,)
     def Predict(self, testFeatures):
         # if there's only one testFeature
         if (len(testFeatures.shape)==1):
@@ -51,34 +52,9 @@ class KNN:
             prediction = np.argmax( np.bincount(neighbors) )
             # save final answer to a list
             predictions.append(prediction)
-        # before return, convert list to np.array, so users will be easier to compare with their testY
+        # before return, convert list back to np.array, so users will be easier to compare with their testY
         return np.array(predictions)
 
     def Use_K_Of(self,k):
 
         self.k = k
-
-
-
-
-
-
-
-
-# Below can be ignored.
-# Those are test codes that only work will directly run knn.py file.
-# It's easier to test run this way, compare to switching to Classify.py and run that file.
-if __name__ == "__main__":
-    import pickle
-    def ReadDataFromPickle(fname):
-        pickle_in = open("userData/"+fname,"rb")
-        return pickle.load(pickle_in)
-    
-    trainX, trainY, testX, testY = ReadDataFromPickle("KNN_dataset")
-    knn = KNN()
-    knn.Use_K_Of(15)
-    knn.Fit(trainX, trainY)
-#    p = knn.Predict(testX[0,:])
-    p = knn.Predict(testX)
-    print("accurate count:", np.sum(np.equal(p,testY)))
-    
