@@ -11,14 +11,14 @@ from knn import KNN
 from knn_backup import KNN as KNN_backup
 
 #Read in dataset for 0 1 2 3 4 5 6 7 8 9
-good_datasets = ['MacMaster', 'Lin', 'Newton', 'Liu', 'Ortigara', 'Saulean']
+good_datasets = ['MacMaster', 'Lin', 'Newton', 'Liu', 'Ortigara', 'Burleson', 'Childs']
 train_test = ['train', 'test']
 import glob
 train_sets = [0] * 10
 test_sets = [0] * 10
 for t in train_test:
     for good_dataset in good_datasets:
-        fnames = glob.glob("userData/%s_%s*.p"%(good_dataset, t))
+        fnames = glob.glob("userData/good/%s_%s*.p"%(good_dataset, t))
         for fname in fnames:
             print("reading "+fname)
             with open(fname, "rb") as f:
@@ -75,7 +75,6 @@ def CenterData(X):
 for i, dataset in enumerate(train_sets):
     train_sets[i] = CenterData(ReduceData(train_sets[i]))
     test_sets[i] = CenterData(ReduceData(test_sets[i]))
-
 
 trainX, trainY = ReshapeData( train_sets, range(10) )
 testX, testY = ReshapeData( test_sets, range(10) )
