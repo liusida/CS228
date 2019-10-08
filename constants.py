@@ -1,5 +1,5 @@
 pygameWindowWidth = 900
-pygameWindowDepth = 900
+pygameWindowDepth = 800
 
 pygameCircleRadius = 16
 

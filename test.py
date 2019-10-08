@@ -4,4 +4,6 @@ import matplotlib.pyplot as plt
 
 import os
 
-os.mkdir("Del6/userData/good/1")
+a = [1,2,3]
+
+print()
