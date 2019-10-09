@@ -6,7 +6,7 @@ import show
 def do(data):
     if len(data.shape)==3:
         data = data.reshape(5,4,6,1)
-
+        
     # input shape (5,4,6) 
     # output shape (3,5,4,2)
     def data_to_hand(data, inv=False):
@@ -51,15 +51,16 @@ def do(data):
 
     ret = []
     for index in range(data.shape[-1]):
-        hand = data_to_hand(data[:,:,:,index])
-        p1 = get_key_points(hand)
+        hand = data_to_hand(data[:,:,:,index]) #So we have points of a hand, the shape is (3,5,4,2), x-y-z 3 coordinates and 5 fingers each hand, 4 bones each finger, 2 ends of each bone, in total 40 points.
+        p1 = get_key_points(hand) # So this is 4 points we want to use to standardize. Those key points should relatively stable, such as the metacarpal bones, which we cannot move them a lot even if we want to. The shape is (3,4), x-y-z 3 coordinates and 4 points.
         # Step 1. Move index finger metacarpal(palm) bone base to origin
-        for i in range(3):
+        for i in range(3): # move x,y,z axes seperately in this loop
             hand[i,:] = hand[i,:] - p1[i,0]
-        p1 = get_key_points(hand)
+
+        p1 = get_key_points(hand) # We need to know where those key points after last step.
 
         # Step 3. Rotate index finger metacarpal(palm) bone to +x-y plane
-        y,z = ab(p1[1,1], p1[2,1])
+        y,z = ab(p1[1,1], p1[2,1]) # p1[1,1] is the y coordinate and p1[2,1] is the z coordinate, we want to rotate to let them fall into +x-y plane, but we need to normalize them, so no scaling will be introduced in this step. here ab(y1,z1) = y1/norm, z1/norm.
         T_rotate = np.array([
             [ 1, 0, 0],
             [ 0, y, z],
@@ -88,7 +89,7 @@ def do(data):
         hand = np.matmul(T_rotate, hand.reshape(3,-1)).reshape(3,5,4,2)
         p1 = get_key_points(hand)
 
-        # Step 6. Mirror Adjust Left-Right hand, depending on the z value of 4-th point ring finger, tip
+        # Step 6. Mirror Adjust Left-Right hand, depending on the z value of 4-th point thumb, metacarpal, tip
         if p1[2,3]<0:
             #print("mirror")
             hand[2,:,:,:] = - hand[2,:,:,:]
