@@ -2,7 +2,7 @@
 
 It's just a homework
 
-# How to use
+## How to use
 
 All useable students data in `studentsData/good/`
 Run `Classify_with_standardization.py`, it will generate `mainData/classifier_with_standardization.p`
