@@ -4,13 +4,11 @@
 
 At first user can do digits 0 and 1.
 
-If user successfully do 1 X=2 times, unlock the next digit 2.
+If user successfully do 1 several times, unlock the next digit 2.
 
-If user successfully do 2 X=2 times, unlock 3, so on and so forth.
+If user successfully do 2 several times, unlock 3, so on and so forth.
 
 If there's no next digit to unlock, go to next level.
-
-X is adjustable.
 
 ## Level 2. less hints
 
